@@ -4,19 +4,53 @@
 //RECURSION
 
 /**
- * Рекурсия – это приём программирования, полезный в ситуациях, когда задача может быть естественно разделена на несколько аналогичных, 
- * но более простых задач. Или когда задача может быть упрощена до несложных действий плюс простой вариант той же задачи. 
- * 
- * Или, как мы скоро увидим, для работы с определёнными структурами данных.
-
- * В процессе выполнения задачи в теле функции могут быть вызваны другие функции для выполнения подзадач. 
- * Частный случай подвызова – когда функция вызывает сама себя. Это как раз и называется рекурсией.
+ * Рекурсивные обходы
  */
 
-function pow(num, exp){
-   
-    return exp === 1 ? num : (num * pow(num, exp-1));
+ let company = {
+    sales: [{
+      name: 'John',
+      salary: 1000,
+    
+    },
+    {
+      name: 'Alice',
+      salary: 600,
+    
+    }],
+  
+    development: {
+      sites: [{
+        name: 'Peter',
+        salary: 2000,
+      
+    }, 
+      {
+        name: 'Alex',
+        salary: 1800,
+      
+    }],
+  
+      internals: [{
+        name: 'Jack',
+        salary: 1300,
+      
+    }],
+    
+    },
+  
+};
 
-}
-
-console.log(pow(2,3));
+function sumSalaries(department) {
+    if (Array.isArray(department)) { // случай (1)
+      return department.reduce((prev, current) => prev + current.salary, 0); // сумма элементов массива
+    } else { // случай (2)
+      let sum = 0;
+      for (let subdep of Object.values(department)) {
+        sum += sumSalaries(subdep); // рекурсивно вызывается для подотделов, суммируя результаты
+      }
+      return sum;
+    }
+  }
+  
+  alert(sumSalaries(company));
