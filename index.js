@@ -2,25 +2,20 @@
 
 //RECURSION
 
-function factorial(num){
-  return num === 1 ? 1 : num *  factorial(num-=1);
+
+function fibonachi(n){
+
+  return n === 1 || n === 2 ? n : fibonachi(n-1) + fibonachi(n -2);
+ 
+
 }
 
-console.log(factorial(3));
 
-
-function func1(){
-console.log('1');
-func2();
+function consoleFibonachi(n){
+  for(let i = 1; i <= n; i++){
+    console.log(`${i} ---- ${fibonachi(i)}`);
+  }
 }
 
-function func2(){
-  console.log('2');
-  func3();
-}
+consoleFibonachi(10);
 
-function func3(){
-  console.log('3');
-}
-
-func1();
