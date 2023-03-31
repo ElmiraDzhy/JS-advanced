@@ -3,19 +3,57 @@
 //RECURSION
 
 
-function fibonachi(n){
+class Friend{
+    /**
+     * 
+     * @param {String} name - Name of friend
+     * @param {Number} amountCash 
+     * @param {Friend} friend 
+     */
+    constructor(name, amountCash, friend){
+        this.name = name;
+        this.amountCash = amountCash;
+        this.friend = friend;
+    }
 
-  return n === 1 || n === 2 ? n : fibonachi(n-1) + fibonachi(n -2);
- 
+    getAllCash(){
+
+        if(this.friend === null){
+            return this.amountCash;
+
+        } else if( this.friend instanceof Friend){
+
+            return this.amountCash + this.friend.getAllCash();
+        }
+
+        if(this.friend instanceof Array){
+            
+            return this.friend.reduce((accum,friend) => { 
+                return accum += friend.getAllCash() 
+            }, this.amountCash);
+            
+            // for(let i = 0; i < this.friend.length; i++){
+            //     this.amountCash += this.friend[i].getAllCash();
+            // }
+       
+        }
+        return this.amountCash;
+
+    }
+
+
 
 }
 
+const first = new Friend('Test', 110, null);
 
-function consoleFibonachi(n){
-  for(let i = 1; i <= n; i++){
-    console.log(`${i} ---- ${fibonachi(i)}`);
-  }
-}
+const second = new Friend('Test2', 153, null);
 
-consoleFibonachi(10);
+const third = new Friend('Test3', 100, null);
+
+const fourth = new Friend('Test4', 500, [third, first, second]);
+
+const fifth = new Friend('Test5', 700, fourth);
+
+console.log(fifth.getAllCash());
 
