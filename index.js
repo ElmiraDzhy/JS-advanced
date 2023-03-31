@@ -1,56 +1,44 @@
 'use strict';
 
+/*
+    Метод Object.defineProperty() определяет новое или изменяет существующее свойство непосредственно на объекте, возвращая этот объект.
 
-//RECURSION
+    obj
+        Объект, на котором определяется свойство.
+
+    prop
+        Имя определяемого или изменяемого свойства.
+
+    descriptor
+        Дескриптор определяемого или изменяемого свойства.
+
+
+*/
 
 /**
- * Рекурсивные обходы
+ * Этот метод позволяет точно добавлять или изменять свойства объекта. 
+ * Обычное добавление свойств через присваивание создаёт свойства, которые можно увидеть через перечисление свойств 
+ * (с помощью цикла for...in или метода Object.keys), чьи значения могут быть изменены и которые могут быть удалены. 
+ * 
+ * Этот же метод позволяет настроить эти дополнительные детали свойства.
  */
 
- let company = {
-    sales: [{
-      name: 'John',
-      salary: 1000,
-    
-    },
-    {
-      name: 'Alice',
-      salary: 600,
-    
-    }],
-  
-    development: {
-      sites: [{
-        name: 'Peter',
-        salary: 2000,
-      
-    }, 
-      {
-        name: 'Alex',
-        salary: 1800,
-      
-    }],
-  
-      internals: [{
-        name: 'Jack',
-        salary: 1300,
-      
-    }],
-    
-    },
-  
-};
+const obj = {};
+const obj2 = {
+    property: 42,
+}
 
-function sumSalaries(department) {
-    if (Array.isArray(department)) { // случай (1)
-      return department.reduce((prev, current) => prev + current.salary, 0); // сумма элементов массива
-    } else { // случай (2)
-      let sum = 0;
-      for (let subdep of Object.values(department)) {
-        sum += sumSalaries(subdep); // рекурсивно вызывается для подотделов, суммируя результаты
-      }
-      return sum;
-    }
-  }
-  
-  alert(sumSalaries(company));
+Object.defineProperty(obj, 'property',{ 
+    value: 42,
+    writable: false, // cant change
+    enumerable: false,
+    configurable: false,
+    get: function(){ return this.value },
+
+
+});
+
+console.log('message')
+
+
+console.log(obj)
