@@ -2,24 +2,56 @@
 
 // Primitive mothods
 
-const str = 'hello';
+function fun (str){
+    return  str.split(' ').map(word => word[0].toUpperCase() + word.slice(1)).join(' ');
+}
 
-console.log(str.charAt(0));
+console.log(fun('feref rerfef erfeef efeer'));
 
-console.log(str.length);
+const spamWords = ['viagra', 'xxx', 'porn'];
 
-console.log(str.indexOf('o'));
+function checkSpam(str){
+    return str.split(' ').map(word => {
+        for(let i = 0; i < spamWords.length; i++){
+            if(word === spamWords[i]){
+                return true;
+            }
+        }
+        return false;
+        });
+}
 
-//В JS есть глобальные встроенные обьекты: Boolean, Number, String
-
-console.log(Number('89'));
-console.log(String('hello')); // обертка
-console.log(new String('hello')); // создание нового обьекта
-
-//механизм обьектов-оберток
-
-//Когда мы работаем с примитивами по значению - это просто примитив, это не обьект
-//когда мы вызываем метод или свойство примитива, JS под капотом создает обьект-обертку соответственного типа
-//вызывает метод который мы указали, метод отрабатывает , после чего обьект - обертка уничтожается
+console.log(checkSpam('viagra referer efvre'));
 
 
+function truncate(str, num){
+    return str.slice(0, num);
+
+}
+
+console.log(truncate('Lorem ipsum dolor sit amet', 12));
+
+
+function palindrom(str){
+    return str === str.split('').reverse().join('');
+}
+
+console.log(palindrom('anna'));
+console.log(palindrom('mama'));
+console.log(palindrom('mamam'));
+
+const letters= ['a','e', 'i', 'o', 'u', 'y'];
+
+function foo(str){
+    let counter = 0;
+    for(let i = 0; i < str.split('').length; i++){
+        for(let j = 0; j < letters.length; j++){
+            if(str.split('')[i] === letters[j]){
+                counter++;
+            }
+        }
+    }
+    return counter;
+}
+
+console.log(foo('edubewfbewejkew'));
