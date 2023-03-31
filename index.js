@@ -1,44 +1,57 @@
 'use strict';
 
-/*
-    Метод Object.defineProperty() определяет новое или изменяет существующее свойство непосредственно на объекте, возвращая этот объект.
-
-    obj
-        Объект, на котором определяется свойство.
-
-    prop
-        Имя определяемого или изменяемого свойства.
-
-    descriptor
-        Дескриптор определяемого или изменяемого свойства.
-
-
-*/
-
 /**
- * Этот метод позволяет точно добавлять или изменять свойства объекта. 
- * Обычное добавление свойств через присваивание создаёт свойства, которые можно увидеть через перечисление свойств 
- * (с помощью цикла for...in или метода Object.keys), чьи значения могут быть изменены и которые могут быть удалены. 
- * 
- * Этот же метод позволяет настроить эти дополнительные детали свойства.
+ * Стек — абстрактный тип данных, представляющий собой список элементов, 
+ * организованных по принципу LIFO (англ. last in — first out, 
+ * «последним пришёл — первым вышел»).
  */
 
-const obj = {};
-const obj2 = {
-    property: 42,
+class Stack {
+
+    constructor(){
+        this._size = 0;
+        this._storage = {};
+    }
+
+    get size(){
+        return this._size;
+    }
+
+    get storage(){
+        return this._storage;
+    }
+
+    isEmpty () {
+        return this.size === 0;
+    }
+
+    push(elem) {
+        this._size++;
+        this._storage[this.size] = elem;
+        return elem;
+    }
+
+    pop(){
+        if(this.size > 0){
+            const lastElem = this._storage[this.size];
+            delete this._storage[this.size];
+            this._size--;
+            return lastElem;
+        }
+        return 0;
+    }
+   
+    top(){
+        return this._storage[this.size];
+    }
+
 }
 
-Object.defineProperty(obj, 'property',{ 
-    value: 42,
-    writable: false, // cant change
-    enumerable: false,
-    configurable: false,
-    get: function(){ return this.value },
-
-
-});
-
-console.log('message')
-
-
-console.log(obj)
+const myStack = new Stack();
+console.log(myStack.isEmpty());
+myStack.push(1);
+myStack.push(2);
+myStack.push(3);
+myStack.push(4);
+myStack.push(5);
+console.log(myStack);
