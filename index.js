@@ -20,9 +20,8 @@ function makeCounter(){
 
 const {increment, decrement} = makeCounter();
 
-function createAdder (n){
-    return (x) => n+=x;
-}
+const createAdder = (n) => (x) => n += x;
+ 
 
 const func = createAdder(5);
 
