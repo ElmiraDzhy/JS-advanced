@@ -1,14 +1,14 @@
 'use strict';
 
 /**
- * Стек — абстрактный тип данных, представляющий собой список элементов, 
- * организованных по принципу LIFO (англ. last in — first out, 
- * «последним пришёл — первым вышел»).
+    Подобно стекам, очередь — хранит элемент последовательным образом. 
+    Существенное отличие от стека – использование FIFO (First in First Out) вместо LIFO.
  */
 
-class Stack {
-
+class Queue {
     constructor(){
+        this._front = null;
+        this._back = null;
         this._size = 0;
         this._storage = {};
     }
@@ -17,41 +17,61 @@ class Stack {
         return this._size;
     }
 
-    get storage(){
-        return this._storage;
+    get front(){
+        return this._front;
     }
 
-    isEmpty () {
-        return this.size === 0;
-    }
+    
+    isEmpty = () => this.size === 0;
+    top = () =>  this.front;
 
-    push(elem) {
+
+    enqueue(elem){
         this._size++;
         this._storage[this.size] = elem;
+        if(this.size === 1){
+            this._front = elem;
+            return elem;
+        }
+        this._back = elem;
         return elem;
     }
 
-    pop(){
-        if(this.size > 0){
-            const lastElem = this._storage[this.size];
-            delete this._storage[this.size];
-            this._size--;
-            return lastElem;
+  
+    dequeue(){
+        const storageKeys = Object.keys(this._storage); //массив ключей хранилища
+        const firstElemKey = storageKeys[0]; //ключ первого эелемента
+        const firstElem = this._storage[firstElemKey]; // елемент хранилища, который нужно удалить - сохраняем в переменную 
+
+        delete this._storage[firstElemKey]; //удаляем первый елемент 
+        this._size--;
+
+        //меняем индексы
+        for (let key in this._storage) {
+            let currentElem = this._storage[key];
+            this._storage[key-1] = currentElem;
+          
         }
-        return 0;
+
+        delete this._storage[storageKeys.length]; // удаляем последний дублирующийся елемент
+        this._front = this._storage[1];
+
+
+        return firstElem;
     }
-   
-    top(){
-        return this._storage[this.size];
-    }
+
+
 
 }
 
-const myStack = new Stack();
-console.log(myStack.isEmpty());
-myStack.push(1);
-myStack.push(2);
-myStack.push(3);
-myStack.push(4);
-myStack.push(5);
-console.log(myStack);
+
+const s = new Queue();
+s.enqueue('first');
+s.enqueue('second');
+s.enqueue('third');
+s.enqueue('fourth');
+s.dequeue();
+s.dequeue();
+
+s.enqueue('myelem');
+console.log(s);
