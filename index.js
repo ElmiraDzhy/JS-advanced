@@ -2,30 +2,6 @@
 
 // Algorithms
 
-const nums = [1,2,3,4,5,4,6,7,6,5,6,54,56,6,3];
-//O(n)
-const linearSearch = (elem, aar) =>{
-    for(let i = 0; i<arr.length; i++){
-        if(arr[i] === elem) {
-            return i;
-        }
-    }
-    return -1;
-}
-
-//O(n^2)
-
-const multyTable = (limit) =>{
-    const table = [];
-    for(let i = 1; i <= limit; i++){
-        for(let j = 1; j <= limit; j++){
-            table.push(`${i} * ${j} = ${j*i}`);
-        }
-    }
-    return table;
-}
-
-// console.log(multyTable(10));
 
 
 //Binary search - works only with sorted data
@@ -33,28 +9,54 @@ const multyTable = (limit) =>{
 const sortedArr = [1,2,3,4,5,6,7,8];
 
 //O(log(n))
-const binarySearch = (elem, arr) =>{
-    let start = 0;
-    let end = arr.length-1;
-    let middle = Math.round((start + end) / 2);
+const recursiveBinarySearch = (elem, arr) =>{
+    
+    const middle = Math.round((arr.length-1) / 2);
+    
+    if(arr[middle] === elem){
+        return middle;
+    }else if( arr[middle] > elem){
+        return recursiveBinarySearch(elem, arr.slice(0, middle));
 
-    while(true){
-        if(arr[middle] === elem){
-            return middle;
-        }
 
-        if(arr[middle] > elem){
-            end = middle;
-            middle = Math.floor((start + end) / 2);
-        }
+    }else if(arr[middle] < elem){
+        return recursiveBinarySearch(elem, arr.slice(middle, arr.length));
 
-        if(arr[middle] < elem){
-            start = middle;
-            middle = Math.ceil((start + end) / 2);
-        }
+
+    }else {
+        return -1;
     }
-
    
 }
 
-//  console.log(binarySearch(6,sortedArr))
+//  console.log(recursiveBinarySearch(8,sortedArr))
+
+
+ /**
+  * Task 0-100
+  */
+
+ function guessNumber(){
+    let start = 1;
+    let end = 100;
+    let middle = Math.round(end / 2);
+
+    while(true){
+       if(confirm(`Your number is ${middle}?`)){
+            alert(`You number is ${middle}!!!`);
+            return middle;
+        }else if(confirm(`Your number bigger than ${middle}?`)){
+            start = middle;
+            middle = Math.floor((start + end) / 2);
+        }else if(confirm(`Your number less than ${middle}?`)){
+            end = middle;
+            middle = Math.ceil((start + end) / 2);
+        }else{
+            return - 1;
+        }
+    }
+
+
+ }
+
+ guessNumber();
