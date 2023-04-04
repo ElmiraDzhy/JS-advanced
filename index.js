@@ -1,62 +1,110 @@
 'use strict';
 
-// Algorithms
+import Stack from "./Stack.js";
 
 
+//(2+2)+[2*(2/4)+3]
 
-//Binary search - works only with sorted data
+//(3+[4)}+() 
 
-const sortedArr = [1,2,3,4,5,6,7,8];
 
-//O(log(n))
-const recursiveBinarySearch = (elem, arr) =>{
+/**
+ * 
+ * @param {String} str - Text wich need to check
+ * @param {Array} open - array with open brackets
+ * @param {Array} closed  - array with closed brackets
+ * @returns {Boolean}
+ */
+
+ function checkBracketsIn(str, open = ['(', '[', '{'], closed = [')', ']', '}']){
+
+    const bracketsArray = makeBraketsArrayFrom(str);
+    const stack = new Stack(bracketsArray.length);
     
-    const middle = Math.round((arr.length-1) / 2);
-    
-    if(arr[middle] === elem){
-        return middle;
-    }else if( arr[middle] > elem){
-        return recursiveBinarySearch(elem, arr.slice(0, middle));
+    for(let i = 0; i < bracketsArray.length; i++){
+       
+        if(open.includes(bracketsArray[i])){
+            stack.push(bracketsArray[i]);
+        }
 
+        if(closed.includes(bracketsArray[i])){
+            if(open.findIndex(j => j === stack.pick()) === closed.findIndex(j => j === bracketsArray[i])){
+                stack.pop();
+            }
 
-    }else if(arr[middle] < elem){
-        return recursiveBinarySearch(elem, arr.slice(middle, arr.length));
-
-
-    }else {
-        return -1;
-    }
-   
-}
-
-//  console.log(recursiveBinarySearch(8,sortedArr))
-
-
- /**
-  * Task 0-100
-  */
-
- function guessNumber(){
-    let start = 1;
-    let end = 100;
-    let middle = Math.round(end / 2);
-
-    while(true){
-       if(confirm(`Your number is ${middle}?`)){
-            alert(`You number is ${middle}!!!`);
-            return middle;
-        }else if(confirm(`Your number bigger than ${middle}?`)){
-            start = middle;
-            middle = Math.floor((start + end) / 2);
-        }else if(confirm(`Your number less than ${middle}?`)){
-            end = middle;
-            middle = Math.ceil((start + end) / 2);
-        }else{
-            return - 1;
         }
     }
 
+    return stack.isEmpty;
 
- }
+}
 
- guessNumber();
+/**
+ * 
+ * @param {*} text 
+ * @param {Object} obj 
+ * @returns 
+ */
+function checkBracketsIn_2(text, obj = {
+    '(' : ')',
+
+    '{' : '}',
+
+    '[' : ']',
+
+}){
+    
+    const arrayBrackets = makeBraketsArrayFrom(text);
+    const stack = new Stack(arrayBrackets.length);
+
+    const objKeys = Object.keys(obj);
+    const objValues = Object.values(obj);
+
+
+    for(let i = 0; i < arrayBrackets.length; i++){
+        if(objKeys.includes(arrayBrackets[i])){
+            stack.push(arrayBrackets[i]);
+           
+        }
+
+       if(objValues.includes(arrayBrackets[i])){ 
+            if(obj[stack.pick()] === arrayBrackets[i]){
+                    stack.pop();
+            }
+        }
+    }
+
+    return stack.isEmpty;
+}
+
+
+
+function makeBraketsArrayFrom(text){
+    if(typeof text === 'string'){
+        return text.split('');
+    }
+    if(text instanceof Array){
+        return text.toString().split('');
+    }
+}
+
+console.group();
+console.log(checkBracketsIn('(2+2)+[2*(2/4)+3]'));
+console.log(checkBracketsIn('(3+[4)}+() '));
+console.log(checkBracketsIn(['(', ')']));
+console.log(checkBracketsIn(['(', ')', '{', '}', '{']));
+console.groupEnd()
+
+console.group();
+console.log(checkBracketsIn_2('(2+2)+[2*(2/4)+3]'));
+console.log(checkBracketsIn_2('(3+[4)}+() '));
+console.log(checkBracketsIn_2(['(', ')']));
+console.log(checkBracketsIn_2(['(', ')', '[','{','}',']']));
+console.log(checkBracketsIn_2( ' ({[text]}) ((<Text)) ', {
+    '(' : ')',
+    '{' : '}',
+    '[' : ']',
+    '<' : '>',
+} ))
+console.groupEnd()
+

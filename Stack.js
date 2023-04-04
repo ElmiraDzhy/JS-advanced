@@ -2,7 +2,7 @@
 
 // Stack data-structure
 
-class Stack{
+export default class Stack{
     constructor(maxSize, ...array){
         this._maxSize = maxSize;
         this._size = 0;
@@ -49,5 +49,7 @@ class Stack{
 
 }
 
-const stack = new Stack(2,1,3);
-console.log(stack);
+
+
+
+
