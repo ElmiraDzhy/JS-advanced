@@ -1,110 +1,66 @@
 'use strict';
 
-import Stack from "./Stack.js";
+// Map - data-structure
+
+const map = new Map();
+
+map.set('str', 'value');
+map.set('str2', 'value');
+map.set('str3', 'value');
+map.set('str4', 'value');
+map.set('str5', 'value');
+map.set({test: 'value'}, 'value');
+map.set(()=>{}, 'value');
+
+console.log(map);
+console.log(map.get('str'));
+console.log(map.has('str5'));
+console.log(map.has('str10'));
 
 
-//(2+2)+[2*(2/4)+3]
+function translator(str){
 
-//(3+[4)}+() 
+    const vocabulary = new Map();
+
+    vocabulary.set('cat', 'кот');
+    vocabulary.set('dog', 'собака');
+    vocabulary.set('eat', 'кушать');
+    vocabulary.set('food', 'еда');
+    vocabulary.set('monkey', 'обезьяна');
+
+    const words = str.toLowerCase().split(' ');
+
+     const translatedText =  words.map((word) => vocabulary.has(word) ? vocabulary.get(word) : word);
+
+     return translatedText.join(' ');
 
 
-/**
- * 
- * @param {String} str - Text wich need to check
- * @param {Array} open - array with open brackets
- * @param {Array} closed  - array with closed brackets
- * @returns {Boolean}
- */
+}
 
- function checkBracketsIn(str, open = ['(', '[', '{'], closed = [')', ']', '}']){
+console.log(translator('dog eat cat'))
 
-    const bracketsArray = makeBraketsArrayFrom(str);
-    const stack = new Stack(bracketsArray.length);
+
+const user1 = {
+    firstName : 'John',
+    lastName: 'Doe',
+
+}
+
+const user2 = {
+    firstName : 'Jane',
+    lastName: 'Doe',
     
-    for(let i = 0; i < bracketsArray.length; i++){
-       
-        if(open.includes(bracketsArray[i])){
-            stack.push(bracketsArray[i]);
-        }
-
-        if(closed.includes(bracketsArray[i])){
-            if(open.findIndex(j => j === stack.pick()) === closed.findIndex(j => j === bracketsArray[i])){
-                stack.pop();
-            }
-
-        }
-    }
-
-    return stack.isEmpty;
-
 }
 
-/**
- * 
- * @param {*} text 
- * @param {Object} obj 
- * @returns 
- */
-function checkBracketsIn_2(text, obj = {
-    '(' : ')',
-
-    '{' : '}',
-
-    '[' : ']',
-
-}){
-    
-    const arrayBrackets = makeBraketsArrayFrom(text);
-    const stack = new Stack(arrayBrackets.length);
-
-    const objKeys = Object.keys(obj);
-    const objValues = Object.values(obj);
+const msgJohn = ['hello', 'how are you'];
+const msgJane = ['hello, John!', 'I am fine'];
 
 
-    for(let i = 0; i < arrayBrackets.length; i++){
-        if(objKeys.includes(arrayBrackets[i])){
-            stack.push(arrayBrackets[i]);
-           
-        }
+const userMap = new Map();
 
-       if(objValues.includes(arrayBrackets[i])){ 
-            if(obj[stack.pick()] === arrayBrackets[i]){
-                    stack.pop();
-            }
-        }
-    }
+userMap.set(user1, msgJohn);
+userMap.set(user2, msgJane);
 
-    return stack.isEmpty;
-}
+console.log(userMap);
 
-
-
-function makeBraketsArrayFrom(text){
-    if(typeof text === 'string'){
-        return text.split('');
-    }
-    if(text instanceof Array){
-        return text.toString().split('');
-    }
-}
-
-console.group();
-console.log(checkBracketsIn('(2+2)+[2*(2/4)+3]'));
-console.log(checkBracketsIn('(3+[4)}+() '));
-console.log(checkBracketsIn(['(', ')']));
-console.log(checkBracketsIn(['(', ')', '{', '}', '{']));
-console.groupEnd()
-
-console.group();
-console.log(checkBracketsIn_2('(2+2)+[2*(2/4)+3]'));
-console.log(checkBracketsIn_2('(3+[4)}+() '));
-console.log(checkBracketsIn_2(['(', ')']));
-console.log(checkBracketsIn_2(['(', ')', '[','{','}',']']));
-console.log(checkBracketsIn_2( ' ({[text]}) ((<Text)) ', {
-    '(' : ')',
-    '{' : '}',
-    '[' : ']',
-    '<' : '>',
-} ))
-console.groupEnd()
 
