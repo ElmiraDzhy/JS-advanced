@@ -61,6 +61,27 @@ class List{
         
     }
 
+
+    [Symbol.iterator] (){
+        return new ListIterator(this);
+    }
+
+}
+
+class ListIterator{
+    constructor(list){
+        this.list = list;
+        this.currentNode = null;
+    }
+
+    next(){
+        this.currentNode = this.currentNode ?  this.currentNode.next : this.list.head;
+    
+        return{
+            value: this.currentNode?.value,
+            done: !this.currentNode,
+        }
+    }
 }
 
 const list = new List();
@@ -74,3 +95,4 @@ list.push('seventh');
 
 
 console.log(list);
+
