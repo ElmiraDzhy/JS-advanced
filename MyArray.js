@@ -87,7 +87,21 @@ class MyArray{
       }
     }
     return newArr
-  }
+    }
+
+   
+    [Symbol.iterator](){
+      let i = 0;
+      return {
+        next: () => {
+          return {
+            value: this[i++],
+            done: i > this.length,
+          }
+        },
+
+      }
+    }
 
 }
 
@@ -95,3 +109,4 @@ class MyArray{
 const arr = new MyArray(1,2,3,4,new MyArray(1,2,3,new MyArray(1,new MyArray(12,33,3,6,4),2,3)), new MyArray(1,2,3,4), 1,2,3);
 
 console.log(arr.flat());
+
