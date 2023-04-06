@@ -1,57 +1,28 @@
 'use strict';
 
 
-/**
- * 
- * @param {String} str1 
- * @param {String} str2 
- * @returns {Boolean}
- */
+// Set
 
-function isAnnogram(str1, str2){
+const set = new Set();
 
-     const map = createVocabulary(str1.toLowerCase().split(''));
-    const map2 = createVocabulary(str2.toLowerCase().split(''));
-
-    if(map.size !== map2.size){
-        return false;
-    }
+set.add('Test');
+set.add('Test1');
+set.add('Test2');
 
 
-    for (const key of map.keys()) {
-        if(map.get(key) != map2.get(key)){
-            return false;
-        }
-    }
+console.log(set);
+console.log(set.has('Test'));
+console.log(set.keys());
+console.log(...set.entries())
 
-    return true;
-
-}
-    
-function createVocabulary(str){
-
-    const map = new Map();
-   
-let counter = 0;
-    for(let i = 0; i < str.length; i++){
-
-        if(map.has(str[i])){
-
-            counter = map.get(str[i]);
-            map.set(str[i], counter+1);
-        } else{
-
-            map.set(str[i], 1);
-        }
-       
-    }
-    return map;
-}
+const set2 = new Set([1,2,1,2,3,3,4,3,5,4]);
+console.log(set2);
 
 
+const arr = [2,3,1,2,3,2,1];
+const arr2 = [2,1,32,6,7,23,1];
 
+const unicSet = new Set([...arr, ...arr2]);
 
-console.log(isAnnogram('amma', 'mama'));
-console.log(isAnnogram('amama', 'mama'));
-console.log(isAnnogram('apma', 'mama'));
-console.log(isAnnogram('hello', 'olleh'));
+console.log(unicSet);
+
